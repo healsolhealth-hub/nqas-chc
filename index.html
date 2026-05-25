@@ -709,7 +709,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
       style="background:var(--green);">
       🚀 Enter CHC App
     </button>
-    <div class="lc-note">Your Facility ID and mobile are registered by your MOIC. Default password is last 4 digits of your mobile.</div>
+    <div class="lc-note">Your Facility ID and mobile are registered by your MOIC (Block Medical Officer). Default password is last 4 digits of your mobile.</div>
   </div>
 
   <!-- FACILITY ADMIN LOGIN (hidden) -->
@@ -793,7 +793,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
     <div class="rs-roles" id="rs-role-grid"></div>
     <div class="rs-name-field">
       <label class="lc-label">Your Name <span id="rs-name-required-tag" style="font-weight:600;color:var(--t3);text-transform:none;letter-spacing:0;">(optional)</span></label>
-      <input class="lc-input" id="rs-name-input" placeholder="e.g. Dr. Rahul Sharma" maxlength="40"/>
+      <input class="lc-input" id="rs-name-input" placeholder="e.g. Dr. Anil Kumar (MOIC)" maxlength="40"/>
       <div class="rs-name-note" id="rs-name-note">Your name appears on scored checkpoints and verified cards.</div>
     </div>
     <button class="rs-btn" onclick="confirmRole()">
@@ -1016,15 +1016,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
     <div class="enroll-box">
       <div class="enroll-title"><i class="ti ti-building-plus" style="font-size:15px;color:var(--green);"></i> Enroll New Facility</div>
       <div class="enroll-grid">
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Facility Code *</label><input class="fc-add-input" id="enroll-code" placeholder="e.g. DL-PHC-001" style="width:100%;" maxlength="20" autocapitalize="characters"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Facility Name *</label><input class="fc-add-input" id="enroll-name" placeholder="Rohini Urban PHC" style="width:100%;" maxlength="60"/></div>
+        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Facility Code *</label><input class="fc-add-input" id="enroll-code" placeholder="e.g. UP-CHC-001" style="width:100%;" maxlength="20" autocapitalize="characters"/></div>
+        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Facility Name *</label><input class="fc-add-input" id="enroll-name" placeholder="Rampur CHC" style="width:100%;" maxlength="60"/></div>
         <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">District</label><input class="fc-add-input" id="enroll-district" placeholder="District" style="width:100%;"/></div>
         <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">State</label><input class="fc-add-input" id="enroll-state" placeholder="State" style="width:100%;"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Sub-Admin Name</label><input class="fc-add-input" id="enroll-saname" placeholder="Dr. Rahul Sharma" style="width:100%;"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Sub-Admin Password</label><input class="fc-add-input" id="enroll-sapwd" placeholder="e.g. ROHINI@2026" style="width:100%;" type="password"/></div>
+        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">MOIC Name</label><input class="fc-add-input" id="enroll-saname" placeholder="Dr. Anil Kumar (MOIC)" style="width:100%;"/></div>
+        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">MOIC Password</label><input class="fc-add-input" id="enroll-sapwd" placeholder="e.g. CHC@2026" style="width:100%;" type="password"/></div>
       </div>
       <button class="fc-add-btn" onclick="enrollFacility()" style="width:100%;padding:11px;border-radius:10px;font-size:13px;">
-        <i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll Facility
+        <i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility
       </button>
     </div>
 
@@ -1033,9 +1033,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
       <div class="fc-header"><div class="fc-title"><i class="ti ti-key" style="font-size:15px;"></i> Global Access and Settings</div></div>
       <div class="fc-body">
         <div class="access-key-box">
-          <div class="ak-title"><i class="ti ti-lock" style="font-size:12px;"></i> Rotating Access Key (Paywall)</div>
+          <div class="ak-title"><i class="ti ti-lock" style="font-size:12px;"></i> Rotating Access Key — MOIC Activation</div>
           <div class="ak-row">
-            <input class="ak-input" id="access-key-input" placeholder="e.g. PHC2026JUN" maxlength="30" autocapitalize="characters"/>
+            <input class="ak-input" id="access-key-input" placeholder="e.g. CHC2026JUN" maxlength="30" autocapitalize="characters"/>
             <button class="ak-btn" onclick="adminPublishAccessKey()">Set Key</button>
           </div>
         </div>
@@ -1154,7 +1154,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
       </div>
       <div class="setup-field">
         <label class="setup-label">PHC / Facility Name</label>
-        <input class="setup-input" id="setup-name" placeholder="e.g. Rohini Urban PHC"/>
+        <input class="setup-input" id="setup-name" placeholder="e.g. Rampur CHC"/>
       </div>
       <div class="setup-row">
         <div class="setup-field"><label class="setup-label">District</label><input class="setup-input" id="setup-district" placeholder="District"/></div>
@@ -1777,7 +1777,7 @@ async function staffLogin(){
       return;
     }
     // Look up staff record by mobile
-    const staffRec=await fbGet('facilities/'+facilityId+'/staff/'+mobile);
+    const staffRec=await fbGet('chc_facilities/'+facilityId+'/staff/'+mobile);
     if(!staffRec){
       err.textContent='Mobile number not registered at this facility. Contact your Facility Admin.';err.classList.add('show');
       if(btn){btn.disabled=false;btn.innerHTML='🚀 Enter CHC App';}
@@ -1810,7 +1810,7 @@ async function staffLogin(){
       localStorage.setItem('chc_autologin',JSON.stringify({facilityCode:facilityId,mobile,password}));
     }catch(e){}
     if(btn){btn.disabled=false;btn.innerHTML='🚀 Enter CHC App';}
-    await startPHCApp();
+    await startUPHCApp();
   }catch(err2){
     console.error(err2);
     err.textContent='Connection error. Check your internet and try again.';err.classList.add('show');
@@ -1833,7 +1833,7 @@ async function subAdminLogin(){
     const facData=await fbGetFacility(facilityId);
     if(!facData){err.textContent='Facility ID not found.';err.classList.add('show');return;}
     if(facData.suspended){err.textContent='This facility is suspended. Contact HealSol Academy.';err.classList.add('show');return;}
-    if(pwd!==facData.subAdminPassword){err.textContent='Incorrect admin password. Contact HealSol Academy.';err.classList.add('show');return;}
+    if(pwd!==facData.moicPassword){err.textContent='Incorrect admin password. Contact HealSol Academy.';err.classList.add('show');return;}
     // Check if activation key needed (first time)
     if(!facData.accessKeyVerified){
       // Show access key field
@@ -1845,7 +1845,7 @@ async function subAdminLogin(){
         err.textContent='Invalid activation key. Contact HealSol Academy.';err.classList.add('show');return;
       }
       // Mark as verified
-      await fbSet('facilities/'+facilityId+'/accessKeyVerified',true);
+      await fbSet('chc_facilities/'+facilityId+'/accessKeyVerified',true);
     }
     err.classList.remove('show');
     subAdminFacilityCode=facilityId;subAdminFacilityData=facData;
@@ -1901,7 +1901,7 @@ function selectRole(id){
   } else {
     if(tag){tag.style.color='var(--t3)';tag.textContent='(optional)';}
     if(note){note.textContent='Your name appears on scored checkpoints and verified cards.';}
-    if(inp){inp.placeholder='e.g. Dr. Rahul Sharma';}
+    if(inp){inp.placeholder='e.g. Dr. Anil Kumar (MOIC)';}
   }
 }
 async function confirmRole(){
@@ -2022,7 +2022,7 @@ function isRoleAllocatedToDay(di){
 }
 
 // ── PHC App start ─────────────────────────────────────────────
-async function startPHCApp(){
+async function startUPHCApp(){
   appMode='phc';
   $('login-screen').style.display='none';
   $('cho-app').classList.add('vis');
@@ -2051,7 +2051,7 @@ async function startPHCApp(){
     const re=await storage.get('phc_edits_v1',true);
     if(re&&re.value) adminEdits=JSON.parse(re.value);
     // Load facility-specific start date (set by Admin or Sub-Admin)
-    const facStartDate=await fbGet('facilities/'+phcState.facilityCode+'/startDate');
+    const facStartDate=await fbGet('chc_facilities/'+phcState.facilityCode+'/startDate');
     if(facStartDate){ phcState.startDate=facStartDate; }
     else if(!phcState.startDate){
       // Fall back to global admin start date
@@ -2093,7 +2093,7 @@ function completeFacilitySetup(){
   phcState.facility.district=district;
   phcState.facility.state=state;
   // Start date is set by Admin/Sub-Admin — load from Firebase
-  // phcState.startDate is already loaded from Firebase in startPHCApp
+  // phcState.startDate is already loaded from Firebase in startUPHCApp
   phcState.setupDone=true;
   updateCurrentDay();saveState();
   try{localStorage.setItem('phc_last_code',phcState.facilityCode);}catch(e){}
@@ -2794,7 +2794,7 @@ let rosterEditMobile = null; // mobile being edited
 function saRenderStaffRoster(){
   const cont = $('sa-staff-roster'); if(!cont) return;
   cont.innerHTML = '';
-  const ROLE_ORDER = ['MO','ANM','StaffNurse','OutreachSup','SupportStaff','Pharmacist','LabTech','ASHA','Nodal'];
+  const ROLE_ORDER = ['MOIC','SeniorMO','ANM','StaffNurseOPD','StaffNurseIPD','WardAttendant','Surgeon','OTNurse','LabTech','Radiographer','Pharmacist','BSUIncharge','OutreachSup','SupportStaff','Nodal'];
   const staffByRole = {};
   ROLE_ORDER.forEach(r => staffByRole[r] = []);
   Object.entries(subAdminStaffList).forEach(([mobile, s]) => {
@@ -2836,9 +2836,9 @@ function saRenderStaffRoster(){
         card.className = 'sa-staff-card';
         card.style.marginBottom = '6px';
         const alloc = staff.allocatedModules || [];
-        const MODULES_SHORT = ['General Clinic','Maternity Health','New Born & Child Health','Immunization',
-          'Family Planning','Communicable Disease','NCD','Dressing Room & Emergency',
-          'Pharmacy','Lab','Outreach','General Admin'];
+        const MODULES_SHORT = ['OPD','Paed OPD_MusQan','Emergency','IPD',
+          'Labour Room_LaQshya','NBSU_MusQan','M-OT_LaQshya',
+          'OT','Lab','Radio','Pharmacy','BSU','Aux Ser','Gen Admin'];
         const modChips = MODULES_SHORT.map(m =>
           `<div class="sa-mod-chip${alloc.includes(m)?' sa-mod-sel':''}"
             onclick="saToggleModuleRoster('${staff.mobile}','${m}',this)">${m.length>12?m.substring(0,11)+'…':m}</div>`
@@ -2925,7 +2925,7 @@ async function saveNewStaff(){
   };
 
   // Save to Firebase
-  const path = 'facilities/'+subAdminFacilityCode+'/staff/'+mobile;
+  const path = 'chc_facilities/'+subAdminFacilityCode+'/staff/'+mobile;
   const ok = await fbSet(path, staffRecord);
   if(!ok){ errEl.textContent='Failed to save. Check Firebase connection.';errEl.style.display='block'; return; }
 
@@ -2949,7 +2949,7 @@ async function saveResetPassword(){
   const mobile = $('reset-pwd-mobile')?.value||'';
   const newPwd = ($('reset-pwd-new')?.value||'').trim();
   if(!newPwd||newPwd.length<4){ showToast('Password must be at least 4 characters.','err'); return; }
-  const path = 'facilities/'+subAdminFacilityCode+'/staff/'+mobile+'/password';
+  const path = 'chc_facilities/'+subAdminFacilityCode+'/staff/'+mobile+'/password';
   const ok = await fbSet(path, newPwd);
   if(ok){
     if(subAdminStaffList[mobile]) subAdminStaffList[mobile].password = newPwd;
@@ -2967,7 +2967,7 @@ async function saRemoveStaffRoster(mobile){
   );
   if(!ok) return;
   try{
-    await db.ref('facilities/'+subAdminFacilityCode+'/staff/'+mobile).remove();
+    await db.ref('chc_facilities/'+subAdminFacilityCode+'/staff/'+mobile).remove();
     delete subAdminStaffList[mobile];
     saRenderStaffRoster();
     showToast('Staff member removed.','ok');
@@ -2978,7 +2978,7 @@ async function saSaveAllRosterAllocations(){
   if(!db){ showToast('Firebase not connected.','err'); return; }
   const updates = {};
   Object.entries(subAdminStaffList).forEach(([mobile,staff])=>{
-    updates['facilities/'+subAdminFacilityCode+'/staff/'+mobile] = staff;
+    updates['chc_facilities/'+subAdminFacilityCode+'/staff/'+mobile] = staff;
   });
   try{
     await db.ref().update(updates);
@@ -3009,8 +3009,8 @@ async function startSubAdminApp(code, facData){
 }
 
 async function saLoadStaff(){
-  // Load from new path: facilities/{code}/staff/
-  const data = await fbGet('facilities/'+subAdminFacilityCode+'/staff');
+  // Load from CHC path: chc_facilities/{code}/staff/
+  const data = await fbGet('chc_facilities/'+subAdminFacilityCode+'/staff');
   subAdminStaffList = data||{};
 }
 async function saLoadVerifiers(){
@@ -3121,7 +3121,7 @@ async function saSetStartDate(){
   const val=$('sa-start-date-input')?.value;
   if(!val){showToast('Please select a date.','err');return;}
   // Save to facility record
-  const ok=await fbSet('facilities/'+subAdminFacilityCode+'/startDate',val);
+  const ok=await fbSet('chc_facilities/'+subAdminFacilityCode+'/startDate',val);
   if(ok){ showToast('Start date set: '+formatDate(val),'ok'); }
   else showToast('Failed to save start date.','err');
 }
@@ -3380,7 +3380,7 @@ async function editFacility(code){
   const newSAName=prompt('Sub-Admin name:',fac.subAdminName||'');
   const newSAPwd=prompt('Sub-Admin password (leave blank to keep current):','');
   const updated={...fac,name:newName,district:newDistrict||'',state:newState||'',subAdminName:newSAName||''};
-  if(newSAPwd) updated.subAdminPassword=newSAPwd;
+  if(newSAPwd) updated.moicPassword=newSAPwd;
   const ok=await fbSet(facilityPath(code),updated);
   if(ok){
     masterFacilities[code]=updated;
@@ -3439,7 +3439,7 @@ async function saveFacilityStartDate(){
   const val=$('fac-date-input').value;
   const code=$('fac-date-code').textContent;
   if(!val){showToast('Please select a date.','err');return;}
-  const ok=await fbSet('facilities/'+code+'/startDate',val);
+  const ok=await fbSet('chc_facilities/'+code+'/startDate',val);
   if(ok){
     if(masterFacilities[code]) masterFacilities[code].startDate=val;
     $('fac-date-modal').classList.remove('open');
@@ -3530,7 +3530,7 @@ async function rmGenerate(){
 async function adminResetStaffPwd(facilityCode, mobile){
   const newPwd = prompt('New password for '+mobile+' (min 4 chars):','');
   if(!newPwd||newPwd.length<4){ showToast('Password too short.','err'); return; }
-  const ok = await fbSet('facilities/'+facilityCode+'/staff/'+mobile+'/password', newPwd);
+  const ok = await fbSet('chc_facilities/'+facilityCode+'/staff/'+mobile+'/password', newPwd);
   if(ok) showToast('Password reset for '+mobile,'ok');
   else showToast('Failed to reset password.','err');
 }
@@ -3649,7 +3649,7 @@ async function enrollFacility(){
     const existing=await fbGet(facilityPath(code));
     if(existing){
       showToast('Facility code "'+code+'" already exists.','err');
-      if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll Facility';}
+      if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility';}
       return;
     }
 
@@ -3659,13 +3659,13 @@ async function enrollFacility(){
       state:state||'',
       enrolledAt:new Date().toISOString(),
       active:true,
-      subAdminPassword:sapwd,
+      moicPassword:sapwd,
       subAdminName:saname||''
     };
 
     // Write to Firebase facilities/
     const ok1=await fbSet(facilityPath(code),facData);
-    if(!ok1){showToast('Failed to enroll facility. Check Firebase.','err');if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll Facility';}return;}
+    if(!ok1){showToast('Failed to enroll facility. Check Firebase.','err');if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility';}return;}
 
     // Also add to shared facility codes for staff login
     let codes=[];
@@ -3685,7 +3685,7 @@ async function enrollFacility(){
     console.error('Enroll error:',err);
     showToast('Error: '+err.message,'err');
   }finally{
-    if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll Facility';}
+    if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility';}
   }
 }
 
@@ -3798,7 +3798,7 @@ window.addEventListener('load',function(){
           try{
             const facData=await fbGetFacility(creds.facilityCode);
             if(!facData||facData.suspended) throw new Error('Facility not available');
-            const staffRec=await fbGet('facilities/'+creds.facilityCode+'/staff/'+creds.mobile);
+            const staffRec=await fbGet('chc_facilities/'+creds.facilityCode+'/staff/'+creds.mobile);
             if(!staffRec) throw new Error('Staff not found');
             const expectedPwd=staffRec.password||creds.mobile.slice(-4);
             if(creds.password!==expectedPwd) throw new Error('Password mismatch');
@@ -3921,7 +3921,7 @@ async function chcFacAdminLogin(){
     const facData=await fbGet(facilityPath(fid));
     if(!facData){err.textContent='Facility ID not found.';err.classList.add('show');return;}
     if(facData.suspended){err.textContent='Facility suspended.';err.classList.add('show');return;}
-    if(pwd!==facData.subAdminPassword){err.textContent='Incorrect admin password.';err.classList.add('show');return;}
+    if(pwd!==facData.moicPassword){err.textContent='Incorrect admin password.';err.classList.add('show');return;}
     if(!facData.accessKeyVerified){
       document.getElementById('chc-fac-ak-field').style.display='';
       if(!ak){err.textContent='Enter your one-time activation key from HealSol.';err.classList.add('show');return;}
