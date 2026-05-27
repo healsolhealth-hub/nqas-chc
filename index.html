@@ -11,6 +11,7 @@
 <style>
 /* Icon fallback if CDN fails */
 .ti::before{font-family:'tabler-icons',sans-serif;}
+.enroll-label{font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.3px;}
 </style>
 <style>
 
@@ -1014,17 +1015,97 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
 
     <!-- Enroll New Facility -->
     <div class="enroll-box">
-      <div class="enroll-title"><i class="ti ti-building-plus" style="font-size:15px;color:var(--green);"></i> Enroll New Facility</div>
+      <div class="enroll-title"><i class="ti ti-building-plus" style="font-size:15px;color:var(--green);"></i> Enroll New CHC Facility</div>
+
+      <!-- Basic Info -->
+      <div style="font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin:10px 0 6px;">Facility Details</div>
       <div class="enroll-grid">
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Facility Code *</label><input class="fc-add-input" id="enroll-code" placeholder="e.g. UP-CHC-001" style="width:100%;" maxlength="20" autocapitalize="characters"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">Facility Name *</label><input class="fc-add-input" id="enroll-name" placeholder="Rampur CHC" style="width:100%;" maxlength="60"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">District</label><input class="fc-add-input" id="enroll-district" placeholder="District" style="width:100%;"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">State</label><input class="fc-add-input" id="enroll-state" placeholder="State" style="width:100%;"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">MOIC Name</label><input class="fc-add-input" id="enroll-saname" placeholder="Dr. Anil Kumar (MOIC)" style="width:100%;"/></div>
-        <div><label style="font-size:10px;font-weight:800;color:var(--t3);display:block;margin-bottom:3px;text-transform:uppercase;">MOIC Password</label><input class="fc-add-input" id="enroll-sapwd" placeholder="e.g. CHC@2026" style="width:100%;" type="password"/></div>
+        <div><label class="enroll-label">Facility Code *</label><input class="fc-add-input" id="enroll-code" placeholder="e.g. UP-CHC-001" style="width:100%;" maxlength="20" autocapitalize="characters"/></div>
+        <div><label class="enroll-label">Facility Name *</label><input class="fc-add-input" id="enroll-name" placeholder="Rampur CHC" style="width:100%;" maxlength="60"/></div>
+        <div><label class="enroll-label">District</label><input class="fc-add-input" id="enroll-district" placeholder="District" style="width:100%;"/></div>
+        <div><label class="enroll-label">State</label><input class="fc-add-input" id="enroll-state" placeholder="State" style="width:100%;"/></div>
       </div>
+
+      <!-- MOIC Details -->
+      <div style="font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 6px;">MOIC (Block Medical Officer) Details</div>
+      <div class="enroll-grid">
+        <div><label class="enroll-label">MOIC Name *</label><input class="fc-add-input" id="enroll-saname" placeholder="Dr. Anil Kumar" style="width:100%;"/></div>
+        <div><label class="enroll-label">MOIC Mobile *</label><input class="fc-add-input" id="enroll-moic-mobile" placeholder="10-digit mobile" type="tel" maxlength="10" style="width:100%;"/><div style="font-size:9px;color:var(--t3);margin-top:2px;">MOIC uses this to login as staff</div></div>
+        <div><label class="enroll-label">MOIC Password *</label><input class="fc-add-input" id="enroll-sapwd" placeholder="e.g. CHC@2026" style="width:100%;" type="password"/></div>
+      </div>
+
+      <!-- FRU / Non-FRU -->
+      <div style="font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 6px;">CHC Type</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:12px;font-weight:700;color:#374151;">
+          <input type="radio" name="chc-type" id="chc-type-fru" value="FRU" checked onchange="chcTypeChanged()" style="accent-color:#4F46E5;"/> FRU — First Referral Unit
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:12px;font-weight:700;color:#374151;">
+          <input type="radio" name="chc-type" id="chc-type-nonfru" value="NonFRU" onchange="chcTypeChanged()" style="accent-color:#4F46E5;"/> Non-FRU — Standard CHC
+        </label>
+      </div>
+
+      <!-- Department Selection -->
+      <div style="font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 6px;">Active Departments <span style="text-transform:none;font-weight:600;">(select which departments to include)</span></div>
+      <div style="display:flex;gap:6px;margin-bottom:8px;">
+        <button onclick="chcSelectAllDepts(true)" style="border:1.5px solid var(--green);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:800;cursor:pointer;background:transparent;color:var(--green);font-family:inherit;">Select All</button>
+        <button onclick="chcSelectAllDepts(false)" style="border:1.5px solid var(--t3);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:800;cursor:pointer;background:transparent;color:var(--t3);font-family:inherit;">Clear All</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;margin-bottom:14px;" id="dept-checkboxes">
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Clinical">
+          <input type="checkbox" id="dept-chk-Clinical" value="Clinical" checked style="width:14px;height:14px;accent-color:#059669;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#059669;flex-shrink:0;display:inline-block;"></span>
+          OPD & Clinical (OPD, Emergency, IPD)
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Paediatrics">
+          <input type="checkbox" id="dept-chk-Paediatrics" value="Paediatrics" checked style="width:14px;height:14px;accent-color:#7C3AED;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#7C3AED;flex-shrink:0;display:inline-block;"></span>
+          Paediatric OPD (MusQan)
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Maternity">
+          <input type="checkbox" id="dept-chk-Maternity" value="Maternity" checked style="width:14px;height:14px;accent-color:#DB2777;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#DB2777;flex-shrink:0;display:inline-block;"></span>
+          Maternity & Child (LaQshya/MusQan)
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-OT">
+          <input type="checkbox" id="dept-chk-OT" value="OT" checked style="width:14px;height:14px;accent-color:#0891B2;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#0891B2;flex-shrink:0;display:inline-block;"></span>
+          Operation Theatre (OT)
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Laboratory">
+          <input type="checkbox" id="dept-chk-Laboratory" value="Laboratory" checked style="width:14px;height:14px;accent-color:#9333EA;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#9333EA;flex-shrink:0;display:inline-block;"></span>
+          Laboratory
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Radiology">
+          <input type="checkbox" id="dept-chk-Radiology" value="Radiology" checked style="width:14px;height:14px;accent-color:#0369A1;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#0369A1;flex-shrink:0;display:inline-block;"></span>
+          Radiology
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Pharmacy">
+          <input type="checkbox" id="dept-chk-Pharmacy" value="Pharmacy" checked style="width:14px;height:14px;accent-color:#16A34A;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#16A34A;flex-shrink:0;display:inline-block;"></span>
+          Pharmacy
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-BSU">
+          <input type="checkbox" id="dept-chk-BSU" value="BSU" checked style="width:14px;height:14px;accent-color:#CA8A04;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#CA8A04;flex-shrink:0;display:inline-block;"></span>
+          Blood Storage Unit
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Support">
+          <input type="checkbox" id="dept-chk-Support" value="Support" checked style="width:14px;height:14px;accent-color:#64748B;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#64748B;flex-shrink:0;display:inline-block;"></span>
+          Auxiliary Services
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Admin">
+          <input type="checkbox" id="dept-chk-Admin" value="Admin" checked style="width:14px;height:14px;accent-color:#374151;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#374151;flex-shrink:0;display:inline-block;"></span>
+          General Administration
+        </label>
+      </div>
+
       <button class="fc-add-btn" onclick="enrollFacility()" style="width:100%;padding:11px;border-radius:10px;font-size:13px;">
-        <i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility
+        ⊕ Enroll CHC Facility
       </button>
     </div>
 
@@ -1090,20 +1171,25 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
       </div>
     </div>
 
-    <!-- Start Date (Sub-Admin can set) -->
+    <!-- Department Start Dates (CHC: per department) -->
     <div class="sa-section">
       <div class="sa-sec-hd">
-        <div class="sa-sec-title"><i class="ti ti-calendar" style="font-size:14px;"></i> Programme Start Date</div>
+        <div class="sa-sec-title">📅 Department Start Dates</div>
+        <button class="sa-sec-btn" onclick="saRenderDeptStartDates()">↻ Refresh</button>
       </div>
       <div class="sa-body">
-        <div style="font-size:11px;color:var(--t3);margin-bottom:10px;font-weight:600;">Set the date when Day 1 unlocks for all staff at this facility.</div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <input type="date" id="sa-start-date-input" class="lc-input" style="flex:1;border-color:rgba(29,78,216,0.3);"/>
-          <button style="background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap;" onclick="saSetStartDate()">
-            <i class="ti ti-calendar-check" style="font-size:12px;"></i> Set Date
-          </button>
-        </div>
-        <div style="font-size:10px;color:var(--green);font-weight:600;margin-top:6px;">All staff will see this date on their welcome screen. They cannot change it.</div>
+        <div id="sa-dept-dates"></div>
+      </div>
+    </div>
+
+    <!-- Department Verifiers -->
+    <div class="sa-section">
+      <div class="sa-sec-hd">
+        <div class="sa-sec-title">✓ Verifiers by Department</div>
+        <button class="sa-sec-btn" onclick="saRenderDeptVerifiers()">↻ Refresh</button>
+      </div>
+      <div class="sa-body">
+        <div id="sa-dept-verifiers"></div>
       </div>
     </div>
 
@@ -1452,36 +1538,86 @@ async function loadDeptVerifiers(code){
 }
 
 function saRenderDeptVerifiers(){
-  const cont=$('sa-dept-verifier-body');if(!cont)return;cont.innerHTML='';
-  const ALL_ROLES=['MO','ANM','StaffNurse','OutreachSup','SupportStaff','Pharmacist','LabTech','ASHA','Nodal'];
-  DEPT_DEFINITIONS.forEach(dept=>{
-    const current=deptVerifiers[dept.id]||dept.defaultVerifiers;
-    const section=document.createElement('div');
-    section.style.cssText='background:var(--bgs);border-radius:11px;padding:11px 13px;margin-bottom:10px;border:1px solid var(--br);';
-    const header=document.createElement('div');
-    header.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:9px;';
-    header.innerHTML=`<span style="font-size:18px;">${dept.icon}</span><div><div style="font-size:12px;font-weight:800;color:var(--t1);">${dept.label}</div><div style="font-size:10px;color:var(--t3);font-weight:600;margin-top:1px;">Modules: ${dept.modules.join(' · ')}</div></div>`;
-    const chips=document.createElement('div');
+  var cont=document.getElementById('sa-dept-verifiers');
+  if(!cont)return;
+  var activeDepts=(subAdminFacilityData&&subAdminFacilityData.activeDepts)||[];
+  var deptVerifiers=subAdminDeptVerifiers||{};
+  cont.innerHTML='';
+
+  var infoBanner=document.createElement('div');
+  infoBanner.style.cssText='background:var(--green-lt);border-radius:9px;padding:9px 12px;margin-bottom:12px;border:1px solid rgba(79,70,229,0.15);font-size:11px;color:#374151;font-weight:600;line-height:1.5;';
+  infoBanner.innerHTML='<strong>Designate verifiers per department.</strong> Only designated staff can verify completed cards in their department.';
+  cont.appendChild(infoBanner);
+
+  var allRoles=window.CHC_ROLES||window.PHC_ROLES||[];
+
+  (DEPT_DEFINITIONS||[]).forEach(function(dept){
+    var isActive=activeDepts.length===0||activeDepts.includes(dept.id);
+    var card=document.createElement('div');
+    card.style.cssText='border-radius:12px;border:1.5px solid '+(isActive?dept.color||'var(--br)':'#E5E7EB')+';margin-bottom:10px;overflow:hidden;opacity:'+(isActive?'1':'0.6')+';';
+
+    if(!isActive){
+      card.innerHTML='<div style="display:flex;align-items:center;gap:9px;padding:11px 14px;background:#F9FAFB;">'
+        +'<div style="width:32px;height:32px;border-radius:8px;background:'+(dept.color||'#64748B')+';color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+dept.icon+'</div>'
+        +'<div style="flex:1;"><div style="font-size:11px;font-weight:800;color:var(--t1);">'+dept.label+'</div>'
+        +'<div style="font-size:9px;color:#9CA3AF;font-weight:600;">Department not active</div></div>'
+        +'<button class="upgrade-btn" data-dept="'+dept.id+'" data-label="'+dept.label+'" style="background:#FEF3C7;color:#92400E;border:1.5px solid #F59E0B;border-radius:8px;padding:5px 10px;font-size:9px;font-weight:800;cursor:pointer;font-family:inherit;">↑ Upgrade</button>'
+        +'</div>';
+      card.querySelector('.upgrade-btn').addEventListener('click',function(){
+        chcRequestUpgrade(this.dataset.dept,this.dataset.label);
+      });
+      cont.appendChild(card);
+      return;
+    }
+
+    var current=(deptVerifiers[dept.id]||[]);
+    var verifiableRoles=allRoles.filter(function(r){return r.canVerify;});
+    var header=document.createElement('div');
+    header.style.cssText='background:'+(dept.color||'#4F46E5')+';padding:9px 14px;display:flex;align-items:center;gap:8px;';
+    header.innerHTML='<div style="width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.2);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;">'+dept.icon+'</div>'
+      +'<div style="font-size:11px;font-weight:800;color:#fff;">'+dept.label+'</div>';
+    var body=document.createElement('div');
+    body.style.cssText='padding:10px 14px;';
+    var label=document.createElement('div');
+    label.style.cssText='font-size:9px;color:var(--t3);font-weight:700;margin-bottom:6px;text-transform:uppercase;';
+    label.textContent='Who can verify cards in this department?';
+    body.appendChild(label);
+    var chips=document.createElement('div');
     chips.style.cssText='display:flex;flex-wrap:wrap;gap:5px;';
-    ALL_ROLES.forEach(rid=>{
-      const rd=getRoleDef(rid);if(!rd)return;
-      const isSel=current.includes(rid);
-      const chip=document.createElement('div');
-      chip.className='verifier-role-chip'+(isSel?' sel':'');
-      chip.innerHTML=`${rd.icon} ${rd.label}`;
-      chip.onclick=()=>{
-        if(!deptVerifiers[dept.id]) deptVerifiers[dept.id]=[...dept.defaultVerifiers];
-        const i=deptVerifiers[dept.id].indexOf(rid);
-        if(i>=0) deptVerifiers[dept.id].splice(i,1);
-        else deptVerifiers[dept.id].push(rid);
-        saRenderDeptVerifiers();
-      };
+    verifiableRoles.forEach(function(r){
+      var sel=current.includes(r.id);
+      var chip=document.createElement('button');
+      chip.className='verifier-role-chip'+(sel?' sel':'');
+      chip.textContent=r.label;
+      chip.dataset.dept=dept.id;
+      chip.dataset.role=r.id;
+      if(sel){chip.style.background=dept.color||'#4F46E5';chip.style.color='#fff';chip.style.borderColor=dept.color||'#4F46E5';}
+      chip.addEventListener('click',function(){saToggleDeptVerifier(this.dataset.dept,this.dataset.role,this);});
       chips.appendChild(chip);
     });
-    section.appendChild(header);
-    section.appendChild(chips);
-    cont.appendChild(section);
+    body.appendChild(chips);
+    card.appendChild(header);
+    card.appendChild(body);
+    cont.appendChild(card);
   });
+
+  var upgradeInfo=document.createElement('div');
+  upgradeInfo.style.cssText='background:#FFF7ED;border-radius:10px;padding:11px 14px;border:1.5px solid #F59E0B;margin-top:6px;font-size:11px;color:#92400E;line-height:1.5;';
+  upgradeInfo.innerHTML='<strong>↑ Upgrade</strong> — Click Upgrade on any inactive department to request activation from HealSol Academy.';
+  cont.appendChild(upgradeInfo);
+}
+
+async function chcRequestUpgrade(deptId, deptLabel){
+  const confirmed=await showConfirm(
+    'Request HealSol Academy to activate the "'+deptLabel+'" department for this facility?',
+    '↑','Request Upgrade','Send Request','var(--green)'
+  );
+  if(!confirmed)return;
+  // Save upgrade request to Firebase
+  const reqPath='chc_facilities/'+subAdminFacilityCode+'/upgradeRequests/'+deptId;
+  const ok=await fbSet(reqPath,{dept:deptId,label:deptLabel,requestedAt:new Date().toISOString(),status:'pending',facilityCode:subAdminFacilityCode,facilityName:subAdminFacilityData.name||subAdminFacilityCode});
+  if(ok) showToast('Upgrade request sent for '+deptLabel+'. HealSol will activate it.','ok');
+  else showToast('Failed to send request.','err');
 }
 
 async function saSaveDeptVerifiers(){
@@ -2794,7 +2930,21 @@ let rosterEditMobile = null; // mobile being edited
 function saRenderStaffRoster(){
   const cont = $('sa-staff-roster'); if(!cont) return;
   cont.innerHTML = '';
-  const ROLE_ORDER = ['MOIC','SeniorMO','ANM','StaffNurseOPD','StaffNurseIPD','WardAttendant','Surgeon','OTNurse','LabTech','Radiographer','Pharmacist','BSUIncharge','OutreachSup','SupportStaff','Nodal'];
+
+  // Show MOIC info from facility data (set by HealSol Admin)
+  const moicBanner = document.createElement('div');
+  moicBanner.style.cssText = 'background:var(--green-lt);border-radius:12px;padding:12px 14px;border:1.5px solid rgba(79,70,229,0.2);margin-bottom:14px;';
+  const moicName = subAdminFacilityData.moicName || subAdminFacilityData.subAdminName || 'MOIC';
+  const moicMobile = subAdminFacilityData.moicMobile || '—';
+  moicBanner.innerHTML = '<div style="font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px;">Block Medical Officer (MOIC)</div>'
+    + '<div style="display:flex;align-items:center;gap:9px;">'
+    + '<div style="width:34px;height:34px;border-radius:8px;background:var(--green);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;">' + (moicName[0]||'M').toUpperCase() + '</div>'
+    + '<div><div style="font-size:12px;font-weight:800;color:var(--t1);">' + moicName + '</div>'
+    + '<div style="font-size:10px;color:var(--t3);">📱 ' + moicMobile + ' · Role: MOIC · <span style="color:#059669;font-weight:700;">Set by HealSol Admin</span></div></div></div>';
+  cont.appendChild(moicBanner);
+
+  // Skip MOIC in editable roster — managed by HealSol Admin
+  const ROLE_ORDER = ['SeniorMO','ANM','StaffNurseOPD','StaffNurseIPD','WardAttendant','Surgeon','OTNurse','LabTech','Radiographer','Pharmacist','BSUIncharge','OutreachSup','SupportStaff','Nodal'];
   const staffByRole = {};
   ROLE_ORDER.forEach(r => staffByRole[r] = []);
   Object.entries(subAdminStaffList).forEach(([mobile, s]) => {
@@ -3004,6 +3154,7 @@ async function startSubAdminApp(code, facData){
   const sdInput=$('sa-start-date-input');
   if(sdInput&&facData?.startDate) sdInput.value=facData.startDate;
   saRenderStaffRoster();
+  saRenderDeptStartDates();
   saRenderDeptVerifiers();
   saRenderProgress();
 }
@@ -3295,71 +3446,91 @@ function masterDrillIn(code){
 
   $('drill-title').textContent=fac.name||code;
   $('drill-code').textContent=code;
-  const startDateDisplay=fac.startDate?formatDate(fac.startDate):'<span style="color:var(--amber-dk);font-weight:800;">Not set</span>';
-  $('drill-info').innerHTML=`
-    <span>${[fac.district,fac.state].filter(Boolean).join(', ')||'—'}</span>
-    <span>Start date: ${startDateDisplay}</span>
-    <span>Sub-Admin: ${fac.subAdminName||'Not set'}</span>
-    <span style="cursor:pointer;color:var(--green);font-weight:800;" onclick="setFacilityStartDate('${code}')"><i class="ti ti-calendar-plus" style="font-size:11px;"></i> Set date</span>`;
 
-  // Staff table
-  const staffCont=$('drill-staff');staffCont.innerHTML='';
-  const staffEntries=Object.entries(staff);
-  if(!staffEntries.length){staffCont.innerHTML='<div style="color:var(--t3);font-size:12px;text-align:center;padding:12px;">No staff registered yet.</div>';}
-  else{
-    staffEntries.forEach(([key,s])=>{
-      const rd=getRoleDef(s.role||'');
-      const staffProg=prog[key]||{};
-      let sv=0,st=0;Object.values(staffProg).forEach(d=>{st++;if(d.verified)sv++;});
-      const pct=st>0?Math.round(sv/st*100):0;
-      const row=document.createElement('div');
-      row.style.cssText='display:flex;align-items:center;gap:8px;background:var(--bgs);border-radius:9px;padding:8px 11px;margin-bottom:5px;border:1px solid var(--br);';
-      row.innerHTML=`
-        <div style="width:28px;height:28px;border-radius:7px;background:var(--green);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${(s.name||'?')[0].toUpperCase()}</div>
-        <div style="flex:1;">
-          <div style="font-size:11px;font-weight:800;color:var(--t1);">${s.name||key}</div>
-          <div style="font-size:9px;color:var(--t3);">${rd?rd.label:s.role||''} · ${s.confirmed?'Active':'Pending'}</div>
-        </div>
-        <div style="font-size:11px;font-weight:800;color:${pct>=70?'var(--green-dk)':'var(--amber-dk)'};">${pct}%</div>`;
-      staffCont.appendChild(row);
-    });
+  // CHC-specific info: MOIC, type, active depts
+  const activeDepts=(fac.activeDepts||[]);
+  const chcTypeLabel=fac.chcType==='FRU'?'FRU':'Non-FRU';
+  const startInfo=$('drill-start-info');
+  if(startInfo) startInfo.innerHTML='<span>MOIC: <strong>'+(fac.moicName||'—')+'</strong></span>'
+    +'<span>📱 '+(fac.moicMobile||'—')+'</span>'
+    +'<span>Type: <strong>'+chcTypeLabel+'</strong></span>'
+    +'<span>'+activeDepts.length+' active depts</span>';
+
+  // Show upgrade requests
+  const upgReqs=fac.upgradeRequests||{};
+  const pendingUpgrades=Object.values(upgReqs).filter(r=>r.status==='pending');
+  const upgradeDiv=$('drill-upgrades');
+  if(upgradeDiv){
+    if(pendingUpgrades.length>0){
+      upgradeDiv.style.display='';
+      upgradeDiv.innerHTML='';
+      var uBox=document.createElement('div');
+      uBox.style.cssText='background:#FEF3C7;border-radius:9px;padding:9px 12px;border:1.5px solid #F59E0B;margin-bottom:10px;';
+      var uTitle=document.createElement('div');
+      uTitle.style.cssText='font-size:11px;font-weight:800;color:#92400E;margin-bottom:6px;';
+      uTitle.textContent='Pending Upgrades ('+pendingUpgrades.length+')';
+      uBox.appendChild(uTitle);
+      pendingUpgrades.forEach(function(ureq){
+        var row=document.createElement('div');
+        row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:4px;';
+        var lbl=document.createElement('span');
+        lbl.style.cssText='font-size:11px;color:#374151;flex:1;';
+        lbl.textContent=ureq.label||ureq.dept;
+        var btn=document.createElement('button');
+        btn.style.cssText='background:#059669;color:#fff;border:none;border-radius:7px;padding:4px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;';
+        btn.textContent='Activate';
+        (function(c,d){btn.addEventListener('click',function(){chcApproveUpgrade(c,d);});})(code,ureq.dept);
+        row.appendChild(lbl);row.appendChild(btn);
+        uBox.appendChild(row);
+      });
+      upgradeDiv.appendChild(uBox);
+    } else upgradeDiv.style.display='none';
   }
 
-  // Module progress
-  const modCont=$('drill-modules');modCont.innerHTML='';
-  const MODS=['General Clinic','Maternity Health','New Born & Child Health','Immunization','Family Planning','Communicable Disease','NCD','Dressing Room & Emergency','Pharmacy','Lab','Outreach','General Admin'];
-  const MICONS=['🏥','🤱','👶','💉','💊','🦠','❤️','🚨','💊','🔬','🌍','📋'];
-  MODS.forEach((mod,i)=>{
-    // Count verified days for this module across all staff
-    let vDays=0,tDays=0;
-    Object.entries(prog).forEach(([sk,days])=>{
-      Object.entries(days||{}).forEach(([dk,d])=>{
-        // We can't know module from progress alone without day lookup
-        // Use day index to check module
-        const di=parseInt((dk||'day_0').replace('day_',''));
-        const dayData=DAYS_CHC_A[di];
-        if(dayData&&dayData.module===mod){tDays++;if(d.verified)vDays++;}
-      });
+  // Staff list
+  const staffEntries=Object.entries(staff);
+  const sc=document.getElementById('sc-drill-staff')||$('drill-staff');
+  if(sc){
+    sc.innerHTML='';
+    staffEntries.forEach(function(entry){
+      var mobile=entry[0]; var s=entry[1];
+      var rd=getRoleDef(s.role||'MOIC');
+      var sp=prog[mobile]||{};
+      var sv=0,st2=0;
+      Object.values(sp).forEach(function(d){st2++;if(d.verified)sv++;});
+      var pct=st2>0?Math.round(sv/st2*100):0;
+      var row=document.createElement('div');
+      row.style.cssText='display:flex;align-items:center;gap:7px;background:var(--bgs);border-radius:8px;padding:7px 10px;margin-bottom:4px;border:1px solid var(--br);';
+      var av=document.createElement('div');
+      av.style.cssText='width:26px;height:26px;border-radius:6px;background:var(--green);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;';
+      av.textContent=(s.name||'?')[0].toUpperCase();
+      var info=document.createElement('div');
+      info.style.cssText='flex:1;';
+      info.innerHTML='<div style="font-size:10px;font-weight:800;color:var(--t1);">'+(s.name||mobile)+'</div>'
+        +'<div style="font-size:8px;color:var(--t3);">'+(rd?rd.label:s.role)+' · 📱'+mobile+'</div>';
+      var actions=document.createElement('div');
+      actions.style.cssText='display:flex;align-items:center;gap:5px;';
+      var pctEl=document.createElement('div');
+      pctEl.style.cssText='font-size:10px;font-weight:800;color:'+(pct>=70?'var(--green)':'var(--amber-dk)')+';';
+      pctEl.textContent=pct+'%';
+      var resetBtn=document.createElement('button');
+      resetBtn.style.cssText='border:1.5px solid var(--br);border-radius:6px;padding:2px 7px;font-size:8px;font-weight:800;cursor:pointer;background:transparent;color:var(--t2);font-family:inherit;';
+      resetBtn.textContent='🔑';
+      (function(c,m){resetBtn.addEventListener('click',function(){adminResetStaffPwd(c,m);});})(code,mobile);
+      actions.appendChild(pctEl);actions.appendChild(resetBtn);
+      row.appendChild(av);row.appendChild(info);row.appendChild(actions);
+      sc.appendChild(row);
     });
-    const pct=tDays>0?Math.round(vDays/tDays*100):0;
-    const barCol=pct>=80?'var(--green)':pct>=50?'var(--amber)':tDays>0?'var(--red)':'var(--br)';
-    const row=document.createElement('div');
-    row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:6px;';
-    row.innerHTML=`
-      <span style="font-size:14px;width:20px;flex-shrink:0;">${MICONS[i]}</span>
-      <div style="flex:1;">
-        <div style="font-size:10px;font-weight:700;color:var(--t2);margin-bottom:2px;">${mod}</div>
-        <div style="height:6px;border-radius:10px;background:var(--br);overflow:hidden;">
-          <div style="height:100%;border-radius:10px;width:${pct}%;background:${barCol};"></div>
-        </div>
-      </div>
-      <div style="font-size:10px;font-weight:800;color:var(--t2);width:28px;text-align:right;">${pct}%</div>`;
-    modCont.appendChild(row);
-  });
+    if(!staffEntries.length) sc.innerHTML='<div style="text-align:center;padding:12px;color:var(--t3);font-size:11px;">No staff added yet.</div>';
+  }
 
-  $('drill-panel').style.display='';
-  $('master-facility-grid').style.display='none';
-  $('master-back-btn').style.display='';
+  // Show drill panel
+  const dp=$('drill-panel')||$('sc-drill-panel');
+  if(dp) dp.style.display='';
+  const mg=$('master-facility-grid');
+  if(mg) mg.style.display='none';
+  const bk=$('drill-back')||$('sc-master-back');
+  if(bk) bk.style.display='';
 }
 
 function masterBack(){
@@ -3629,64 +3800,72 @@ async function enrollFacility(){
   const state=$('enroll-state')?.value.trim();
   const sapwd=$('enroll-sapwd')?.value.trim();
   const saname=$('enroll-saname')?.value.trim();
+  const moicMobile=($('enroll-moic-mobile')?.value||'').trim();
+  const chcType=document.querySelector('input[name="chc-type"]:checked')?.value||'FRU';
+
   if(!code){showToast('Facility code is required.','err');return;}
   if(!name){showToast('Facility name is required.','err');return;}
-  if(!sapwd){showToast('Sub-Admin password is required.','err');return;}
+  if(!sapwd){showToast('MOIC password is required.','err');return;}
+  if(!moicMobile||moicMobile.length!==10){showToast('MOIC mobile number (10 digits) is required for staff login.','err');return;}
 
-  // Ensure Firebase is connected
-  if(!db){
-    initFirebase();
-    await new Promise(r=>setTimeout(r,1200));
-  }
-  if(!db){showToast('Firebase not connected. Check credentials.','err');return;}
+  // Get selected departments
+  const deptCheckboxes=document.querySelectorAll('#dept-checkboxes input[type="checkbox"]');
+  const activeDepts=Array.from(deptCheckboxes).filter(c=>c.checked).map(c=>c.value);
+  if(activeDepts.length===0){showToast('Select at least one department.','err');return;}
 
-  // Show loading state
+  if(!db){initFirebase();await new Promise(r=>setTimeout(r,1200));}
+  if(!db){showToast('Firebase not connected.','err');return;}
+
   const btn=document.querySelector('[onclick="enrollFacility()"]');
-  if(btn){btn.disabled=true;btn.innerHTML='<i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:14px;"></i> Enrolling...';}
+  if(btn){btn.disabled=true;btn.innerHTML='⌛ Enrolling...';}
 
   try{
-    // Check if facility code already exists
     const existing=await fbGet(facilityPath(code));
-    if(existing){
-      showToast('Facility code "'+code+'" already exists.','err');
-      if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility';}
-      return;
-    }
+    if(existing){showToast('Facility code "'+code+'" already exists.','err');if(btn){btn.disabled=false;btn.innerHTML='⊕ Enroll CHC Facility';}return;}
 
     const facData={
-      name,
-      district:district||'',
-      state:state||'',
-      enrolledAt:new Date().toISOString(),
-      active:true,
-      moicPassword:sapwd,
-      subAdminName:saname||''
+      name, district:district||'', state:state||'',
+      enrolledAt:new Date().toISOString(), active:true,
+      moicPassword:sapwd, subAdminName:saname||'',
+      moicName:saname||'', moicMobile:moicMobile,
+      chcType:chcType, activeDepts:activeDepts,
     };
 
-    // Write to Firebase facilities/
     const ok1=await fbSet(facilityPath(code),facData);
-    if(!ok1){showToast('Failed to enroll facility. Check Firebase.','err');if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility';}return;}
+    if(!ok1){showToast('Failed to enroll. Check Firebase.','err');if(btn){btn.disabled=false;btn.innerHTML='⊕ Enroll CHC Facility';}return;}
 
-    // Also add to shared facility codes for staff login
-    let codes=[];
-    try{const r=await storage.get('phc_codes_v1',true);if(r&&r.value)codes=JSON.parse(r.value);}catch(e){}
-    if(!codes.some(c=>c.code===code))codes.push({code,name,pwd:''});
-    await storage.set('phc_codes_v1',JSON.stringify(codes),true);
+    // Auto-add MOIC as staff member
+    const moicRecord={
+      name:saname||'MOIC',mobile:moicMobile,role:'MOIC',
+      password:moicMobile.slice(-4),
+      allocatedModules:[],addedAt:new Date().toISOString(),addedBy:'healsol',confirmed:true
+    };
+    await fbSet(facilityPath(code)+'/staff/'+moicMobile, moicRecord);
 
     // Clear form
-    ['enroll-code','enroll-name','enroll-district','enroll-state','enroll-sapwd','enroll-saname'].forEach(id=>{const el=$(id);if(el)el.value='';});
+    ['enroll-code','enroll-name','enroll-district','enroll-state','enroll-sapwd','enroll-saname','enroll-moic-mobile']
+      .forEach(id=>{const el=$(id);if(el)el.value='';});
 
-    // Refresh master dashboard
     await masterLoadAll();
     renderMasterDashboard();
-
-    showToast('Facility "'+name+'" ('+code+') enrolled successfully!','ok');
+    showToast('✓ "'+name+'" ('+code+') enrolled! MOIC added as staff.','ok');
   }catch(err){
     console.error('Enroll error:',err);
     showToast('Error: '+err.message,'err');
   }finally{
-    if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-plus" style="font-size:14px;"></i> Enroll CHC Facility';}
+    if(btn){btn.disabled=false;btn.innerHTML='⊕ Enroll CHC Facility';}
   }
+}
+
+function chcTypeChanged(){
+  const chcType=document.querySelector('input[name="chc-type"]:checked')?.value||'FRU';
+  // For FRU: check all; for NonFRU: keep as-is (admin selects manually)
+  if(chcType==='FRU'){
+    document.querySelectorAll('#dept-checkboxes input[type="checkbox"]').forEach(c=>c.checked=true);
+  }
+}
+function chcSelectAllDepts(val){
+  document.querySelectorAll('#dept-checkboxes input[type="checkbox"]').forEach(c=>c.checked=val);
 }
 
 // ── Admin App (kept for legacy compatibility) ──────────────────
@@ -4037,25 +4216,69 @@ function saRenderDeptStartDates(){
   var cont=document.getElementById("sa-dept-dates");
   if(!cont)return;
   var dds=(subAdminFacilityData&&subAdminFacilityData.deptStartDates)||{};
+  var activeDepts=(subAdminFacilityData&&subAdminFacilityData.activeDepts)||[];
   cont.innerHTML="";
+
+  // Info banner
+  var banner=document.createElement("div");
+  banner.style.cssText="background:var(--green-lt);border-radius:9px;padding:9px 12px;margin-bottom:12px;border:1px solid rgba(79,70,229,0.15);font-size:11px;color:#374151;font-weight:600;line-height:1.5;";
+  banner.innerHTML="<strong>Set start date per department.</strong> Each department runs independently. Staff see Day 1 on their department start date.";
+  cont.appendChild(banner);
+
   (DEPT_DEFINITIONS||[]).forEach(function(dept){
+    var isActive=activeDepts.length===0||activeDepts.includes(dept.id);
     var info=chcGetDeptDay(dept.id,dds);
     var row=document.createElement("div");
-    row.style.cssText="display:flex;align-items:center;gap:8px;background:var(--bgs);border-radius:10px;padding:9px 12px;margin-bottom:6px;border:1px solid var(--br);flex-wrap:wrap;";
+    row.style.cssText="display:flex;align-items:center;gap:8px;border-radius:10px;padding:9px 12px;margin-bottom:6px;border:1.5px solid "+(isActive?"var(--br)":"#E5E7EB")+";background:"+(isActive?"var(--bgs)":"#F9FAFB")+";flex-wrap:wrap;opacity:"+(isActive?"1":"0.5")+";";
     var col=dept.color||"#4F46E5";
     var statusCol=info.active?"#059669":"var(--t3)";
-    var statusTxt=info.label+(info.startDate?" - Started "+info.startDate:" - Not started");
+    var statusTxt=info.label+(info.startDate?" · Started "+info.startDate:(isActive?" · Not started yet":" · Dept not active"));
     var dateVal=info.startDate||"";
     var deptId=dept.id;
+    var dateInput=isActive?"<input type='date' value='"+dateVal+"' style='border:1.5px solid var(--br);border-radius:8px;padding:5px 8px;font-size:11px;font-family:inherit;background:var(--bgc);' data-dept='"+deptId+"' onchange='chcSetDeptStartDate(this.dataset.dept,this.value)'/>":"<span style='font-size:10px;color:#9CA3AF;font-weight:600;'>Not enrolled</span>";
     row.innerHTML=(
       "<div style='width:34px;height:34px;border-radius:8px;background:"+col+";color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;'>"+dept.icon+"</div>"
       +"<div style='flex:1;min-width:100px;'>"
-      +"<div style='font-size:11px;font-weight:800;color:var(--t1);'>"+dept.label+"</div>"
+      +"<div style='font-size:11px;font-weight:800;color:var(--t1);'>"+dept.label+(isActive?"":" <span style='background:#FEF3C7;color:#92400E;border-radius:6px;padding:1px 6px;font-size:8px;'>Inactive</span>")+"</div>"
       +"<div style='font-size:9px;color:"+statusCol+";font-weight:600;'>"+statusTxt+"</div></div>"
-      +"<input type='date' value='"+dateVal+"' style='border:1.5px solid var(--br);border-radius:8px;padding:5px 8px;font-size:11px;font-family:inherit;background:var(--bgc);' data-dept='"+deptId+"' onchange='chcSetDeptStartDate(this.dataset.dept,this.value)'/>"
+      +dateInput
     );
     cont.appendChild(row);
   });
+}
+
+async function chcApproveUpgrade(facilityCode, deptId){
+  const fac=masterFacilities[facilityCode]||{};
+  const activeDepts=fac.activeDepts||[];
+  if(!activeDepts.includes(deptId)){activeDepts.push(deptId);}
+  const ok1=await fbSet(facilityPath(facilityCode)+'/activeDepts',activeDepts);
+  const ok2=await fbSet(facilityPath(facilityCode)+'/upgradeRequests/'+deptId+'/status','approved');
+  if(ok1&&ok2){
+    showToast(deptId+' activated for '+facilityCode,'ok');
+    await masterLoadAll();
+    scDrillIn(facilityCode);
+  }else showToast('Failed to activate.','err');
+}
+
+async function saToggleDeptVerifier(deptId, roleId, el){
+  if(!subAdminDeptVerifiers) subAdminDeptVerifiers={};
+  if(!subAdminDeptVerifiers[deptId]) subAdminDeptVerifiers[deptId]=[];
+  const arr=subAdminDeptVerifiers[deptId];
+  const idx=arr.indexOf(roleId);
+  if(idx>=0){
+    arr.splice(idx,1);
+    el.classList.remove('sel');
+    el.style.background='';el.style.color='';el.style.borderColor='';
+  } else {
+    arr.push(roleId);
+    el.classList.add('sel');
+    const dept=(DEPT_DEFINITIONS||[]).find(d=>d.id===deptId);
+    const col=dept?dept.color:'#4F46E5';
+    el.style.background=col;el.style.color='#fff';el.style.borderColor=col;
+  }
+  const path=verifiersPath(subAdminFacilityCode)+'/'+deptId;
+  await fbSet(path, subAdminDeptVerifiers[deptId]);
+  showToast('Verifier updated','ok');
 }
 </script>
 </body>
