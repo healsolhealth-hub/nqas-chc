@@ -989,18 +989,34 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
     <!-- Drill-in panel -->
     <div class="drill-panel" id="drill-panel" style="display:none;">
       <div class="drill-header">
-        <div>
-          <div style="font-size:16px;font-weight:900;color:var(--t1);font-family:'Poppins',sans-serif;" id="drill-title">Facility</div>
-          <div style="font-size:11px;color:var(--t3);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;" id="drill-info"></div>
-          <div style="font-size:10px;color:var(--green);font-weight:700;margin-top:4px;" id="drill-code"></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;width:100%;">
+          <button onclick="masterBack()" style="width:34px;height:34px;border-radius:9px;border:1.5px solid var(--br);background:var(--bgs);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:2px;" title="Back to all facilities">←</button>
+          <div style="flex:1;">
+            <div style="font-size:16px;font-weight:900;color:var(--t1);font-family:'Poppins',sans-serif;" id="drill-title">Facility</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;" id="drill-info"></div>
+            <div style="font-size:10px;color:var(--green);font-weight:700;margin-top:4px;" id="drill-code"></div>
+          </div>
+          <button class="mrb-btn" onclick="generateReport('facility',drillFacilityCode)" style="font-size:11px;padding:7px 14px;flex-shrink:0;">
+            PDF
+          </button>
         </div>
-        <button class="mrb-btn" onclick="generateReport('facility',drillFacilityCode)" style="font-size:11px;padding:7px 14px;">
-          <i class="ti ti-file-text"></i> PDF
-        </button>
       </div>
+      <!-- Active/inactive departments -->
+      <div id="drill-depts" style="margin-bottom:12px;"></div>
+      <div id="drill-upgrades" style="display:none;"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
         <div>
-          <div style="font-size:11px;font-weight:800;color:var(--t2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Staff</div>
+          <!-- Per-facility access key -->
+      <div style="background:#FFFBEB;border-radius:10px;padding:11px 14px;border:1.5px solid #F59E0B;margin-bottom:12px;">
+        <div style="font-size:10px;font-weight:800;color:#92400E;margin-bottom:7px;text-transform:uppercase;">Facility Access Key (MOIC one-time activation)</div>
+        <div style="display:flex;gap:8px;">
+          <input id="drill-ak-input" placeholder="e.g. CHC2026JUN" maxlength="30" autocapitalize="characters"
+            style="flex:1;border:1.5px solid #F59E0B;border-radius:8px;padding:8px 11px;font-size:12px;font-family:inherit;background:#fff;outline:none;"/>
+          <button onclick="adminSetFacilityKey(drillFacilityCode)"
+            style="background:#F59E0B;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap;">Set Key</button>
+        </div>
+      </div>
+      <div style="font-size:11px;font-weight:800;color:var(--t2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Staff</div>
           <div id="drill-staff"></div>
         </div>
         <div>
@@ -1111,7 +1127,17 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
 
     <!-- Access Key + Start Date -->
     <div class="fc-section">
-      <div class="fc-header"><div class="fc-title"><i class="ti ti-key" style="font-size:15px;"></i> Global Access and Settings</div></div>
+      <div class="fc-header"><div class="fc-box" style="border-left:4px solid #F59E0B;">
+      <div class="fc-header">
+        <div class="fc-title"><i class="ti ti-info-circle" style="font-size:15px;color:#F59E0B;"></i> Facility Settings</div>
+      </div>
+      <div class="fc-body">
+        <div style="font-size:12px;color:var(--t2);font-weight:600;line-height:1.7;">
+          Access keys and department start dates are managed <strong>per facility</strong>.<br>
+          Click <strong>Drill In</strong> on any facility card to manage settings for that facility.
+        </div>
+      </div>
+    </div></div>
       <div class="fc-body">
         <div class="access-key-box">
           <div class="ak-title"><i class="ti ti-lock" style="font-size:12px;"></i> Rotating Access Key — MOIC Activation</div>
@@ -3446,6 +3472,30 @@ function masterDrillIn(code){
 
   $('drill-title').textContent=fac.name||code;
   $('drill-code').textContent=code;
+  // Pre-fill access key input if set
+  const akInput=document.getElementById('drill-ak-input');
+
+  // Show active/inactive departments as chips
+  const deptDiv=document.getElementById('drill-depts');
+  if(deptDiv&&DEPT_DEFINITIONS){
+    deptDiv.innerHTML='';
+    var deptActiveList=(fac.activeDepts)||[];
+    var hdr=document.createElement('div');
+    hdr.style.cssText='font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;';
+    hdr.textContent='Departments ('+deptActiveList.length+' of '+DEPT_DEFINITIONS.length+' active)';
+    deptDiv.appendChild(hdr);
+    var chips=document.createElement('div');
+    chips.style.cssText='display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;';
+    DEPT_DEFINITIONS.forEach(function(dept){
+      var isActive=deptActiveList.includes(dept.id);
+      var chip=document.createElement('span');
+      chip.style.cssText='padding:3px 9px;border-radius:20px;font-size:9px;font-weight:800;border:1.5px solid '+(isActive?dept.color:'#E5E7EB')+';background:'+(isActive?dept.color+'22':'#F9FAFB')+';color:'+(isActive?dept.color:'#9CA3AF')+';';
+      chip.textContent=dept.label;
+      chips.appendChild(chip);
+    });
+    deptDiv.appendChild(chips);
+  }
+  if(akInput) akInput.value=fac.accessKey||'';
 
   // CHC-specific info: MOIC, type, active depts
   const activeDepts=(fac.activeDepts||[]);
@@ -3525,12 +3575,10 @@ function masterDrillIn(code){
   }
 
   // Show drill panel
-  const dp=$('drill-panel')||$('sc-drill-panel');
+  const dp=$('drill-panel');
   if(dp) dp.style.display='';
   const mg=$('master-facility-grid');
   if(mg) mg.style.display='none';
-  const bk=$('drill-back')||$('sc-master-back');
-  if(bk) bk.style.display='';
 }
 
 function masterBack(){
@@ -4100,12 +4148,17 @@ async function chcFacAdminLogin(){
     const facData=await fbGet(facilityPath(fid));
     if(!facData){err.textContent='Facility ID not found.';err.classList.add('show');return;}
     if(facData.suspended){err.textContent='Facility suspended.';err.classList.add('show');return;}
-    if(pwd!==facData.moicPassword){err.textContent='Incorrect admin password.';err.classList.add('show');return;}
+    // Check moicPassword first, fall back to subAdminPassword/choPassword for legacy facilities
+    const storedPwd=facData.moicPassword||facData.subAdminPassword||facData.choPassword||'';
+    if(pwd!==storedPwd){err.textContent='Incorrect admin password.';err.classList.add('show');return;}
     if(!facData.accessKeyVerified){
       document.getElementById('chc-fac-ak-field').style.display='';
       if(!ak){err.textContent='Enter your one-time activation key from HealSol.';err.classList.add('show');return;}
+      // Check facility-specific key first, then shared key
+      const facKey=await fbGet(facilityPath(fid)+'/accessKey');
       const pubKey=await fbGet('shared/accesskey_chc');
-      if(pubKey&&ak.toUpperCase()!==pubKey.toUpperCase()){err.textContent='Invalid activation key.';err.classList.add('show');return;}
+      const validKey=facKey||pubKey||'';
+      if(validKey&&ak.toUpperCase()!==validKey.toUpperCase()){err.textContent='Invalid activation key.';err.classList.add('show');return;}
       await fbSet(facilityPath(fid)+'/accessKeyVerified',true);
     }
     err.classList.remove('show');
@@ -4280,6 +4333,30 @@ async function saToggleDeptVerifier(deptId, roleId, el){
   await fbSet(path, subAdminDeptVerifiers[deptId]);
   showToast('Verifier updated','ok');
 }
+
+// ── Per-facility admin functions ──────────────────────────────
+async function adminSetFacilityKey(facilityCode){
+  const key=(document.getElementById('drill-ak-input')?.value||'').trim();
+  if(!key){showToast('Enter an activation key first.','err');return;}
+  const ok1=await fbSet(facilityPath(facilityCode)+'/accessKey',key.toUpperCase());
+  const ok2=await fbSet(facilityPath(facilityCode)+'/accessKeyVerified',false);
+  if(ok1&&ok2) showToast('Access key set. MOIC will enter this key on first login.','ok');
+  else showToast('Failed to set key.','err');
+}
+
+function masterBack(){
+  const dp=$('drill-panel');if(dp)dp.style.display='none';
+  const mg=$('master-facility-grid');if(mg)mg.style.display='';
+}
+
+async function adminResetStaffPwd(facilityCode, mobile){
+  const newPwd=prompt('New password for '+mobile+' (min 4 chars):','');
+  if(!newPwd||newPwd.length<4){showToast('Password too short.','err');return;}
+  const ok=await fbSet(facilityPath(facilityCode)+'/staff/'+mobile+'/password',newPwd);
+  if(ok) showToast('Password reset for '+mobile,'ok');
+  else showToast('Failed.','err');
+}
+
 </script>
 </body>
 </html>
