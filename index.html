@@ -1001,9 +1001,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
           </button>
         </div>
       </div>
-      <!-- Active/inactive departments -->
-      <div id="drill-depts" style="margin-bottom:12px;"></div>
-      <div id="drill-upgrades" style="display:none;"></div>
+      <!-- Department Management Panel -->
+      <div id="drill-depts" style="margin-bottom:14px;"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
         <div>
           <!-- Per-facility access key -->
@@ -1068,25 +1067,45 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
         <button onclick="chcSelectAllDepts(false)" style="border:1.5px solid var(--t3);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:800;cursor:pointer;background:transparent;color:var(--t3);font-family:inherit;">Clear All</button>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;margin-bottom:14px;" id="dept-checkboxes">
-        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Clinical">
-          <input type="checkbox" id="dept-chk-Clinical" value="Clinical" checked style="width:14px;height:14px;accent-color:#059669;cursor:pointer;"/>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-OPD">
+          <input type="checkbox" id="dept-chk-OPD" value="OPD" checked style="width:14px;height:14px;accent-color:#059669;cursor:pointer;"/>
           <span style="width:10px;height:10px;border-radius:50%;background:#059669;flex-shrink:0;display:inline-block;"></span>
-          OPD & Clinical (OPD, Emergency, IPD)
+          OPD
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Emergency">
+          <input type="checkbox" id="dept-chk-Emergency" value="Emergency" checked style="width:14px;height:14px;accent-color:#DC2626;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#DC2626;flex-shrink:0;display:inline-block;"></span>
+          Emergency
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-IPD">
+          <input type="checkbox" id="dept-chk-IPD" value="IPD" checked style="width:14px;height:14px;accent-color:#2563EB;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#2563EB;flex-shrink:0;display:inline-block;"></span>
+          IPD (Indoor)
         </label>
         <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Paediatrics">
           <input type="checkbox" id="dept-chk-Paediatrics" value="Paediatrics" checked style="width:14px;height:14px;accent-color:#7C3AED;cursor:pointer;"/>
           <span style="width:10px;height:10px;border-radius:50%;background:#7C3AED;flex-shrink:0;display:inline-block;"></span>
           Paediatric OPD (MusQan)
         </label>
-        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Maternity">
-          <input type="checkbox" id="dept-chk-Maternity" value="Maternity" checked style="width:14px;height:14px;accent-color:#DB2777;cursor:pointer;"/>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-LabourRoom">
+          <input type="checkbox" id="dept-chk-LabourRoom" value="LabourRoom" checked style="width:14px;height:14px;accent-color:#DB2777;cursor:pointer;"/>
           <span style="width:10px;height:10px;border-radius:50%;background:#DB2777;flex-shrink:0;display:inline-block;"></span>
-          Maternity & Child (LaQshya/MusQan)
+          Labour Room (LaQshya)
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-NBSU">
+          <input type="checkbox" id="dept-chk-NBSU" value="NBSU" checked style="width:14px;height:14px;accent-color:#EA580C;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#EA580C;flex-shrink:0;display:inline-block;"></span>
+          NBSU (MusQan)
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-MOT">
+          <input type="checkbox" id="dept-chk-MOT" value="MOT" checked style="width:14px;height:14px;accent-color:#BE185D;cursor:pointer;"/>
+          <span style="width:10px;height:10px;border-radius:50%;background:#BE185D;flex-shrink:0;display:inline-block;"></span>
+          M-OT / Maternity OT (LaQshya)
         </label>
         <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-OT">
           <input type="checkbox" id="dept-chk-OT" value="OT" checked style="width:14px;height:14px;accent-color:#0891B2;cursor:pointer;"/>
           <span style="width:10px;height:10px;border-radius:50%;background:#0891B2;flex-shrink:0;display:inline-block;"></span>
-          Operation Theatre (OT)
+          Operation Theatre
         </label>
         <label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1.5px solid #E5E7EB;cursor:pointer;font-size:11px;font-weight:700;color:#374151;background:#F9FAFB;" id="dept-chk-wrap-Laboratory">
           <input type="checkbox" id="dept-chk-Laboratory" value="Laboratory" checked style="width:14px;height:14px;accent-color:#9333EA;cursor:pointer;"/>
@@ -1119,6 +1138,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
           General Administration
         </label>
       </div>
+      </div>
 
       <button class="fc-add-btn" onclick="enrollFacility()" style="width:100%;padding:11px;border-radius:10px;font-size:13px;">
         ⊕ Enroll CHC Facility
@@ -1127,15 +1147,13 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color
 
     <!-- Access Key + Start Date -->
     <div class="fc-section">
-      <div class="fc-header"><div class="fc-box" style="border-left:4px solid #F59E0B;">
-      <div class="fc-header">
-        <div class="fc-title"><i class="ti ti-info-circle" style="font-size:15px;color:#F59E0B;"></i> Facility Settings</div>
+      <div class="fc-header"><div style="background:#FFFBEB;border-radius:12px;border:1.5px solid #F59E0B;padding:14px 16px;margin-bottom:14px;">
+      <div style="font-size:12px;font-weight:800;color:#92400E;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+        ⓘ Facility Settings
       </div>
-      <div class="fc-body">
-        <div style="font-size:12px;color:var(--t2);font-weight:600;line-height:1.7;">
-          Access keys and department start dates are managed <strong>per facility</strong>.<br>
-          Click <strong>Drill In</strong> on any facility card to manage settings for that facility.
-        </div>
+      <div style="font-size:12px;color:#92400E;font-weight:600;line-height:1.7;">
+        Access keys and department start dates are managed <strong>per facility</strong>.<br>
+        Click <strong>Drill In</strong> on any facility card to manage settings for that facility.
       </div>
     </div></div>
       <div class="fc-body">
@@ -1532,16 +1550,20 @@ const DEFAULT_VERIFIER_ROLES = ['MOIC'];
 let deptVerifiers = {};
 
 const DEPT_DEFINITIONS = [
-  { id:'Clinical',    label:'OPD & Clinical',         modules:['OPD','Emergency','IPD'],                              icon:'OPD', color:'#059669', defaultVerifiers:['MOIC'] },
-  { id:'Paediatrics', label:'Paediatric OPD',         modules:['Paed OPD_MusQan'],                                   icon:'PAE', color:'#7C3AED', defaultVerifiers:['MOIC'] },
-  { id:'Maternity',   label:'Maternity & Child',      modules:['Labour Room_LaQshya','NBSU_MusQan','M-OT_LaQshya'],   icon:'LBR', color:'#DB2777', defaultVerifiers:['MOIC'] },
-  { id:'OT',          label:'Operation Theatre',      modules:['OT'],                                                 icon:'OT',  color:'#0891B2', defaultVerifiers:['MOIC','Surgeon'] },
-  { id:'Laboratory',  label:'Laboratory',             modules:['Lab'],                                                icon:'LAB', color:'#9333EA', defaultVerifiers:['MOIC','LabTech'] },
-  { id:'Radiology',   label:'Radiology',              modules:['Radio'],                                              icon:'RAD', color:'#0369A1', defaultVerifiers:['MOIC'] },
-  { id:'Pharmacy',    label:'Pharmacy',               modules:['Pharmacy'],                                           icon:'PHM', color:'#16A34A', defaultVerifiers:['MOIC','Pharmacist'] },
-  { id:'BSU',         label:'Blood Storage Unit',     modules:['BSU'],                                                icon:'BSU', color:'#CA8A04', defaultVerifiers:['MOIC','BSUIncharge'] },
-  { id:'Support',     label:'Auxiliary Services',     modules:['Aux Ser'],                                            icon:'AUX', color:'#64748B', defaultVerifiers:['MOIC'] },
-  { id:'Admin',       label:'General Administration', modules:['Gen Admin'],                                          icon:'ADM', color:'#374151', defaultVerifiers:['MOIC','Nodal'] },
+  { id:'OPD',         label:'OPD',                         modules:['OPD'],                    icon:'OPD', color:'#059669', defaultVerifiers:['MOIC'] },
+  { id:'Emergency',   label:'Emergency',                   modules:['Emergency'],              icon:'EMG', color:'#DC2626', defaultVerifiers:['MOIC'] },
+  { id:'IPD',         label:'IPD (Indoor)',                modules:['IPD'],                    icon:'IPD', color:'#2563EB', defaultVerifiers:['MOIC'] },
+  { id:'Paediatrics', label:'Paediatric OPD (MusQan)',     modules:['Paed OPD_MusQan'],        icon:'PAE', color:'#7C3AED', defaultVerifiers:['MOIC'] },
+  { id:'LabourRoom',  label:'Labour Room (LaQshya)',       modules:['Labour Room_LaQshya'],    icon:'LBR', color:'#DB2777', defaultVerifiers:['MOIC'] },
+  { id:'NBSU',        label:'NBSU (MusQan)',               modules:['NBSU_MusQan'],            icon:'NBS', color:'#EA580C', defaultVerifiers:['MOIC'] },
+  { id:'MOT',         label:'M-OT / Maternity OT (LaQshya)',modules:['M-OT_LaQshya'],         icon:'MOT', color:'#BE185D', defaultVerifiers:['MOIC'] },
+  { id:'OT',          label:'Operation Theatre (OT)',      modules:['OT'],                     icon:'OT',  color:'#0891B2', defaultVerifiers:['MOIC','Surgeon'] },
+  { id:'Laboratory',  label:'Laboratory',                  modules:['Lab'],                    icon:'LAB', color:'#9333EA', defaultVerifiers:['MOIC','LabTech'] },
+  { id:'Radiology',   label:'Radiology',                   modules:['Radio'],                  icon:'RAD', color:'#0369A1', defaultVerifiers:['MOIC'] },
+  { id:'Pharmacy',    label:'Pharmacy',                    modules:['Pharmacy'],               icon:'PHM', color:'#16A34A', defaultVerifiers:['MOIC','Pharmacist'] },
+  { id:'BSU',         label:'Blood Storage Unit (BSU)',    modules:['BSU'],                    icon:'BSU', color:'#CA8A04', defaultVerifiers:['MOIC','BSUIncharge'] },
+  { id:'Support',     label:'Auxiliary Services',          modules:['Aux Ser'],                icon:'AUX', color:'#64748B', defaultVerifiers:['MOIC'] },
+  { id:'Admin',       label:'General Administration',      modules:['Gen Admin'],              icon:'ADM', color:'#374151', defaultVerifiers:['MOIC','Nodal'] },
 ];
 
 function canVerifyDept(roleId, module){
@@ -1673,7 +1695,7 @@ const MODULE_ROLES = {
 
 // Default module allocation per role (used when admin hasn't set custom allocation)
 const DEFAULT_MODULE_ALLOCATION = {
-  'MOIC':         [],  // full view
+  'MOIC':         [],  // full view — sees all modules
   'SeniorMO':     ['OPD','Emergency','IPD','Paed OPD_MusQan'],
   'ANM':          ['OPD','Labour Room_LaQshya','NBSU_MusQan'],
   'StaffNurseOPD':['OPD','Paed OPD_MusQan','Emergency'],
@@ -1759,8 +1781,8 @@ const storage={
 // ── Firebase path helpers ──────────────────────────────────────
 function safeName(n){ return (n||'').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()||'unnamed'; }
 function facilityPath(code){ return 'chc_facilities/'+code; }
-function staffPath(code,roleId,name){ return 'chc_facilities/'+code+'/staff/'+roleId+'_'+safeName(name); }
-function progressPath(code,roleId,name,di){ return 'chc_progress/'+code+'/'+roleId+'_'+safeName(name)+'/day_'+di; }
+function staffPath(code,mobile,name){ return 'chc_facilities/'+code+'/staff/'+mobile; }
+function progressPath(code,mobile,name,di){ return 'chc_progress/'+code+'/'+mobile+'/day_'+di; }
 function verifiersPath(code){ return 'chc_verifiers/'+code; }
 
 async function fbGetFacility(code){ return await fbGet(facilityPath(code)); }
@@ -2161,8 +2183,24 @@ function getDayScore(di){
   if(xp/max>=0.8)return 2;if(xp/max>=0.4)return 1;return 0;
 }
 function updateCurrentDay(){
-  const arr=getDaysForRole(phcState.roleId);
-  if(phcState.startDate) phcState.currentDay=computeCurrentDay(phcState.startDate,arr.length);
+  // CHC: use department-specific start date
+  const roleId=uphcState.roleId||'MOIC';
+  const rd=getRoleDef(roleId);
+  const track=rd?rd.track:'A';
+  const deptMap={
+    'A':'OPD','B_Mat':'LabourRoom','B_OT':'OT','B_Lab':'Laboratory',
+    'B_Radio':'Radiology','B_Pharmacy':'Pharmacy','B_BSU':'BSU',
+    'B_Aux':'Support','B_Admin':'Admin'
+  };
+  const dept=deptMap[track]||'OPD';
+  const deptDates=uphcState.deptStartDates||{};
+  const deptStart=deptDates[dept]||uphcState.startDate;
+  if(deptStart){
+    const trackDays=TRACK_DAYS_MAP[track];
+    const maxDays=trackDays?trackDays.length:90;
+    uphcState.currentDay=computeCurrentDay(deptStart,maxDays);
+    uphcState.startDate=deptStart;
+  }
 }
 function isRoleAllocatedToDay(di){
   const d=getDay(di);
@@ -3475,25 +3513,78 @@ function masterDrillIn(code){
   // Pre-fill access key input if set
   const akInput=document.getElementById('drill-ak-input');
 
-  // Show active/inactive departments as chips
-  const deptDiv=document.getElementById('drill-depts');
+  // Dept management panel — admin can toggle any dept active/inactive
+  var deptDiv=document.getElementById('drill-depts');
   if(deptDiv&&DEPT_DEFINITIONS){
     deptDiv.innerHTML='';
     var deptActiveList=(fac.activeDepts)||[];
-    var hdr=document.createElement('div');
-    hdr.style.cssText='font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;';
-    hdr.textContent='Departments ('+deptActiveList.length+' of '+DEPT_DEFINITIONS.length+' active)';
-    deptDiv.appendChild(hdr);
-    var chips=document.createElement('div');
-    chips.style.cssText='display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;';
+
+    // Header
+    var hdrRow=document.createElement('div');
+    hdrRow.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px;';
+    var hdrTitle=document.createElement('div');
+    hdrTitle.style.cssText='font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;';
+    hdrTitle.textContent='Departments ('+deptActiveList.length+' of '+DEPT_DEFINITIONS.length+' active)';
+    var hdrBtns=document.createElement('div');
+    hdrBtns.style.cssText='display:flex;gap:6px;';
+    var btnAll=document.createElement('button');
+    btnAll.style.cssText='background:var(--green);color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:9px;font-weight:800;cursor:pointer;font-family:inherit;';
+    btnAll.textContent='Activate All';
+    (function(c){btnAll.addEventListener('click',function(){adminToggleAllDepts(c,true);});})(code);
+    var btnNone=document.createElement('button');
+    btnNone.style.cssText='background:#E5E7EB;color:#374151;border:none;border-radius:6px;padding:3px 10px;font-size:9px;font-weight:800;cursor:pointer;font-family:inherit;';
+    btnNone.textContent='Deactivate All';
+    (function(c){btnNone.addEventListener('click',function(){adminToggleAllDepts(c,false);});})(code);
+    hdrBtns.appendChild(btnAll);hdrBtns.appendChild(btnNone);
+    hdrRow.appendChild(hdrTitle);hdrRow.appendChild(hdrBtns);
+    deptDiv.appendChild(hdrRow);
+
+    // Dept grid — each card is clickable to toggle
+    var grid=document.createElement('div');
+    grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;margin-bottom:10px;';
     DEPT_DEFINITIONS.forEach(function(dept){
       var isActive=deptActiveList.includes(dept.id);
-      var chip=document.createElement('span');
-      chip.style.cssText='padding:3px 9px;border-radius:20px;font-size:9px;font-weight:800;border:1.5px solid '+(isActive?dept.color:'#E5E7EB')+';background:'+(isActive?dept.color+'22':'#F9FAFB')+';color:'+(isActive?dept.color:'#9CA3AF')+';';
-      chip.textContent=dept.label;
-      chips.appendChild(chip);
+      var card=document.createElement('div');
+      card.style.cssText='display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;border:1.5px solid '+(isActive?dept.color:'#E5E7EB')+';background:'+(isActive?dept.color+'18':'#F9FAFB')+';cursor:pointer;transition:all 0.15s;';
+      card.title=(isActive?'Deactivate':'Activate')+' '+dept.label;
+      var dot=document.createElement('span');
+      dot.style.cssText='width:8px;height:8px;border-radius:50%;background:'+(isActive?dept.color:'#D1D5DB')+';flex-shrink:0;';
+      var lbl=document.createElement('span');
+      lbl.style.cssText='font-size:10px;font-weight:700;color:'+(isActive?dept.color:'#9CA3AF')+';flex:1;line-height:1.3;';
+      lbl.textContent=dept.label;
+      var tog=document.createElement('span');
+      tog.style.cssText='font-size:9px;font-weight:800;color:'+(isActive?dept.color:'#9CA3AF')+';flex-shrink:0;';
+      tog.textContent=isActive?'ON':'OFF';
+      card.appendChild(dot);card.appendChild(lbl);card.appendChild(tog);
+      (function(d,a){card.addEventListener('click',function(){adminToggleDept(code,d.id,!a);});})(dept,isActive);
+      grid.appendChild(card);
     });
-    deptDiv.appendChild(chips);
+    deptDiv.appendChild(grid);
+
+    // Pending upgrade requests from MOIC
+    var upgReqs=fac.upgradeRequests||{};
+    var pending=Object.values(upgReqs).filter(function(r){return r.status==='pending';});
+    if(pending.length>0){
+      var upgBanner=document.createElement('div');
+      upgBanner.style.cssText='background:#FEF3C7;border-radius:9px;padding:9px 12px;border:1.5px solid #F59E0B;';
+      var upgTitle=document.createElement('div');
+      upgTitle.style.cssText='font-size:10px;font-weight:800;color:#92400E;margin-bottom:5px;';
+      upgTitle.textContent='Pending Upgrade Requests ('+pending.length+')';
+      upgBanner.appendChild(upgTitle);
+      pending.forEach(function(r){
+        var row=document.createElement('div');
+        row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:3px;';
+        var lbl=document.createElement('span');lbl.style.cssText='font-size:11px;color:#374151;flex:1;';
+        lbl.textContent=r.label||r.dept;
+        var btn=document.createElement('button');
+        btn.style.cssText='background:#059669;color:#fff;border:none;border-radius:7px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;';
+        btn.textContent='Activate';
+        (function(c,d){btn.addEventListener('click',function(){adminToggleDept(c,d,true);});})(code,r.dept);
+        row.appendChild(lbl);row.appendChild(btn);
+        upgBanner.appendChild(row);
+      });
+      deptDiv.appendChild(upgBanner);
+    }
   }
   if(akInput) akInput.value=fac.accessKey||'';
 
@@ -3506,36 +3597,8 @@ function masterDrillIn(code){
     +'<span>Type: <strong>'+chcTypeLabel+'</strong></span>'
     +'<span>'+activeDepts.length+' active depts</span>';
 
-  // Show upgrade requests
-  const upgReqs=fac.upgradeRequests||{};
-  const pendingUpgrades=Object.values(upgReqs).filter(r=>r.status==='pending');
-  const upgradeDiv=$('drill-upgrades');
-  if(upgradeDiv){
-    if(pendingUpgrades.length>0){
-      upgradeDiv.style.display='';
-      upgradeDiv.innerHTML='';
-      var uBox=document.createElement('div');
-      uBox.style.cssText='background:#FEF3C7;border-radius:9px;padding:9px 12px;border:1.5px solid #F59E0B;margin-bottom:10px;';
-      var uTitle=document.createElement('div');
-      uTitle.style.cssText='font-size:11px;font-weight:800;color:#92400E;margin-bottom:6px;';
-      uTitle.textContent='Pending Upgrades ('+pendingUpgrades.length+')';
-      uBox.appendChild(uTitle);
-      pendingUpgrades.forEach(function(ureq){
-        var row=document.createElement('div');
-        row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:4px;';
-        var lbl=document.createElement('span');
-        lbl.style.cssText='font-size:11px;color:#374151;flex:1;';
-        lbl.textContent=ureq.label||ureq.dept;
-        var btn=document.createElement('button');
-        btn.style.cssText='background:#059669;color:#fff;border:none;border-radius:7px;padding:4px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;';
-        btn.textContent='Activate';
-        (function(c,d){btn.addEventListener('click',function(){chcApproveUpgrade(c,d);});})(code,ureq.dept);
-        row.appendChild(lbl);row.appendChild(btn);
-        uBox.appendChild(row);
-      });
-      upgradeDiv.appendChild(uBox);
-    } else upgradeDiv.style.display='none';
-  }
+  // Upgrade requests handled in dept management panel above
+
 
   // Staff list
   const staffEntries=Object.entries(staff);
@@ -4230,10 +4293,12 @@ window.addEventListener('load',async function(){
 
 // ── CHC Department Start Dates ────────────────────────────────
 const CHC_DEPT_TRACKS = {
-  'Clinical':    'A',     'Paediatrics': 'A',
-  'Maternity':   'B_Mat', 'OT':          'B_OT',
+  'OPD':         'A',     'Emergency':   'A',
+  'IPD':         'A',     'Paediatrics': 'A',
+  'LabourRoom':  'B_Mat', 'NBSU':        'B_Mat',
+  'MOT':         'B_Mat', 'OT':          'B_OT',
   'Laboratory':  'B_Lab', 'Radiology':   'B_Radio',
-  'Pharmacy':    'B_Pharmacy','BSU':      'B_BSU',
+  'Pharmacy':    'B_Pharmacy','BSU':     'B_BSU',
   'Support':     'B_Aux', 'Admin':       'B_Admin',
 };
 
@@ -4355,6 +4420,42 @@ async function adminResetStaffPwd(facilityCode, mobile){
   const ok=await fbSet(facilityPath(facilityCode)+'/staff/'+mobile+'/password',newPwd);
   if(ok) showToast('Password reset for '+mobile,'ok');
   else showToast('Failed.','err');
+}
+
+
+// ── Department toggle functions (HealSol Admin) ───────────────
+async function adminToggleDept(facilityCode, deptId, activate){
+  const fac=masterFacilities[facilityCode]||{};
+  var activeDepts=Array.isArray(fac.activeDepts)?[...fac.activeDepts]:[];
+  const idx=activeDepts.indexOf(deptId);
+  if(activate && idx<0){ activeDepts.push(deptId); }
+  else if(!activate && idx>=0){ activeDepts.splice(idx,1); }
+  else return; // no change
+
+  const ok=await fbSet(facilityPath(facilityCode)+'/activeDepts', activeDepts);
+  if(!ok){ showToast('Failed to update.','err'); return; }
+
+  // Clear upgrade request if activating
+  if(activate){
+    await fbSet(facilityPath(facilityCode)+'/upgradeRequests/'+deptId+'/status','approved');
+  }
+
+  // Update local cache
+  masterFacilities[facilityCode].activeDepts=activeDepts;
+
+  // Re-render drill panel
+  showToast((activate?'✓ Activated: ':'✕ Deactivated: ')+deptId,'ok');
+  masterDrillIn(facilityCode);
+}
+
+async function adminToggleAllDepts(facilityCode, activate){
+  const allDepts=(DEPT_DEFINITIONS||[]).map(function(d){return d.id;});
+  const newDepts=activate?allDepts:[];
+  const ok=await fbSet(facilityPath(facilityCode)+'/activeDepts', newDepts);
+  if(!ok){ showToast('Failed to update.','err'); return; }
+  masterFacilities[facilityCode].activeDepts=newDepts;
+  showToast((activate?'All departments activated':'All departments deactivated'),'ok');
+  masterDrillIn(facilityCode);
 }
 
 </script>
