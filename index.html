@@ -1577,12 +1577,13 @@ function canVerifyDept(roleId, module){
 }
 
 async function loadDeptVerifiers(code){
-  const data=await fbGet('verifiers/'+code+'/dept');
-  if(data) deptVerifiers=data;
-  else {
-    // Init with defaults
-    DEPT_DEFINITIONS.forEach(d=>{ deptVerifiers[d.id]=d.defaultVerifiers; });
-  }
+  try{
+    const data=await fbGet('chc_verifiers/'+code+'/dept');
+    if(data) deptVerifiers=data;
+    else {
+      DEPT_DEFINITIONS.forEach(function(d){ deptVerifiers[d.id]=d.defaultVerifiers||[]; });
+    }
+  }catch(e){ console.warn('loadDeptVerifiers:',e.message); }
 }
 
 function saRenderDeptVerifiers(){
@@ -4196,7 +4197,8 @@ async function chcStaffLogin(){
     if(btn){btn.disabled=false;btn.innerHTML='🚀 Enter CHC App';}
     await startCHCApp();
   }catch(e){
-    err.textContent='Connection error. Check internet and try again.';err.classList.add('show');
+    console.error('CHC staff login error:',e.message,e.stack);
+    err.textContent='Error: '+e.message;err.classList.add('show');
     if(btn){btn.disabled=false;btn.innerHTML='🚀 Enter CHC App';}
   }
 }
