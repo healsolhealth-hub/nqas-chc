@@ -1870,6 +1870,9 @@ let phcState = {
   roleDone: false,
   view: 'cards',
   questTab: 'role',
+  deptStartDates: {},
+  activeDepts: [],
+  chcType: 'FRU',
 };
 
 // ── Utility ────────────────────────────────────────────────────
@@ -2185,7 +2188,7 @@ function getDayScore(di){
 }
 function updateCurrentDay(){
   // CHC: use department-specific start date
-  const roleId=uphcState.roleId||'MOIC';
+  const roleId=phcState.roleId||'MOIC';
   const rd=getRoleDef(roleId);
   const track=rd?rd.track:'A';
   const deptMap={
@@ -2194,13 +2197,13 @@ function updateCurrentDay(){
     'B_Aux':'Support','B_Admin':'Admin'
   };
   const dept=deptMap[track]||'OPD';
-  const deptDates=uphcState.deptStartDates||{};
-  const deptStart=deptDates[dept]||uphcState.startDate;
+  const deptDates=phcState.deptStartDates||{};
+  const deptStart=deptDates[dept]||phcState.startDate;
   if(deptStart){
     const trackDays=TRACK_DAYS_MAP[track];
     const maxDays=trackDays?trackDays.length:90;
-    uphcState.currentDay=computeCurrentDay(deptStart,maxDays);
-    uphcState.startDate=deptStart;
+    phcState.currentDay=computeCurrentDay(deptStart,maxDays);
+    phcState.startDate=deptStart;
   }
 }
 function isRoleAllocatedToDay(di){
@@ -4097,18 +4100,18 @@ window.addEventListener('load',function(){
           if(creds.pwd!==(staffRec.password||creds.mob.slice(-4))) throw new Error('Password changed');
 
           // Populate both state objects
-          uphcState.facilityCode = creds.fid;
-          uphcState.roleId       = staffRec.role||'MOIC';
-          uphcState.staffName    = staffRec.name||'';
-          uphcState.staffMobile  = creds.mob;
-          uphcState.roleDone     = true;
-          uphcState.setupDone    = true;
-          uphcState.facility     = {name:facData.name||creds.fid,district:facData.district||'',state:facData.state||''};
-          uphcState.deptStartDates = facData.deptStartDates||{};
-          uphcState.activeDepts    = facData.activeDepts||[];
-          if(facData.startDate) uphcState.startDate=facData.startDate;
+          phcState.facilityCode = creds.fid;
+          phcState.roleId       = staffRec.role||'MOIC';
+          phcState.staffName    = staffRec.name||'';
+          phcState.staffMobile  = creds.mob;
+          phcState.roleDone     = true;
+          phcState.setupDone    = true;
+          phcState.facility     = {name:facData.name||creds.fid,district:facData.district||'',state:facData.state||''};
+          phcState.deptStartDates = facData.deptStartDates||{};
+          phcState.activeDepts    = facData.activeDepts||[];
+          if(facData.startDate) phcState.startDate=facData.startDate;
           if(staffRec.allocatedModules&&staffRec.allocatedModules.length){
-            moduleAllocations[uphcState.roleId+'_'+safeName(uphcState.staffName)]=staffRec.allocatedModules;
+            moduleAllocations[phcState.roleId+'_'+safeName(phcState.staffName)]=staffRec.allocatedModules;
           }
           document.getElementById('login-screen').style.display='none';
           await startCHCApp();
@@ -4177,21 +4180,21 @@ async function chcStaffLogin(){
     const expectedPwd=staffRec.password||mob.slice(-4);
     if(pwd!==expectedPwd){err.textContent='Incorrect password. Default is last 4 digits of your mobile.';err.classList.add('show');if(btn){btn.disabled=false;btn.innerHTML='🚀 Enter CHC App';}return;}
     err.classList.remove('show');
-    uphcState.facilityCode=fid;
-    uphcState.roleId=staffRec.role||'MOIC';
-    uphcState.staffName=staffRec.name||'';
-    uphcState.staffMobile=mob;
-    uphcState.roleDone=true;
-    uphcState.setupDone=true;
-    uphcState.facility.name=facData.name||fid;
-    uphcState.facility.district=facData.district||'';
-    uphcState.facility.state=facData.state||'';
-    if(facData.startDate)uphcState.startDate=facData.startDate;
-    uphcState.deptStartDates=facData.deptStartDates||{};
-    uphcState.chcType=facData.chcType||'FRU';
-    uphcState.activeDepts=facData.activeDepts||[];
+    phcState.facilityCode=fid;
+    phcState.roleId=staffRec.role||'MOIC';
+    phcState.staffName=staffRec.name||'';
+    phcState.staffMobile=mob;
+    phcState.roleDone=true;
+    phcState.setupDone=true;
+    phcState.facility.name=facData.name||fid;
+    phcState.facility.district=facData.district||'';
+    phcState.facility.state=facData.state||'';
+    if(facData.startDate)phcState.startDate=facData.startDate;
+    phcState.deptStartDates=facData.deptStartDates||{};
+    phcState.chcType=facData.chcType||'FRU';
+    phcState.activeDepts=facData.activeDepts||[];
     if(staffRec.allocatedModules&&staffRec.allocatedModules.length){
-      moduleAllocations[uphcState.roleId+'_'+safeName(uphcState.staffName)]=staffRec.allocatedModules;
+      moduleAllocations[phcState.roleId+'_'+safeName(phcState.staffName)]=staffRec.allocatedModules;
     }
     try{localStorage.setItem('chc_autologin',JSON.stringify({fid,mob,pwd}));}catch(e){}
     if(btn){btn.disabled=false;btn.innerHTML='🚀 Enter CHC App';}
@@ -4260,18 +4263,18 @@ window.addEventListener('load',async function(){
           const staffRec=await fbGet(staffPath(fid,mob,''));
           if(!staffRec)throw new Error('Staff not found');
           if(pwd!==(staffRec.password||mob.slice(-4)))throw new Error('Password changed');
-          uphcState.facilityCode=fid;
-          uphcState.roleId=staffRec.role||'MOIC';
-          uphcState.staffName=staffRec.name||'';
-          uphcState.staffMobile=mob;
-          uphcState.roleDone=true;
-          uphcState.setupDone=true;
-          uphcState.facility.name=facData.name||fid;
-          uphcState.facility.district=facData.district||'';
-          uphcState.facility.state=facData.state||'';
-          if(facData.startDate)uphcState.startDate=facData.startDate;
+          phcState.facilityCode=fid;
+          phcState.roleId=staffRec.role||'MOIC';
+          phcState.staffName=staffRec.name||'';
+          phcState.staffMobile=mob;
+          phcState.roleDone=true;
+          phcState.setupDone=true;
+          phcState.facility.name=facData.name||fid;
+          phcState.facility.district=facData.district||'';
+          phcState.facility.state=facData.state||'';
+          if(facData.startDate)phcState.startDate=facData.startDate;
           if(staffRec.allocatedModules&&staffRec.allocatedModules.length){
-            moduleAllocations[uphcState.roleId+'_'+safeName(uphcState.staffName)]=staffRec.allocatedModules;
+            moduleAllocations[phcState.roleId+'_'+safeName(phcState.staffName)]=staffRec.allocatedModules;
           }
           await loadDeptVerifiers(fid);
           document.getElementById('login-screen').style.display='none';
@@ -4471,34 +4474,34 @@ async function startCHCApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('cho-app').classList.add('vis');
 
-  // Sync uphcState into phcState so existing UI (welcome screen etc.) works
-  phcState.roleId       = uphcState.roleId      || 'MOIC';
-  phcState.staffName    = uphcState.staffName    || '';
-  phcState.staffMobile  = uphcState.staffMobile  || '';
-  phcState.facilityCode = uphcState.facilityCode || '';
-  phcState.facility     = uphcState.facility     || {name:'',district:'',state:''};
-  phcState.startDate    = uphcState.startDate    || null;
+  // Sync phcState into phcState so existing UI (welcome screen etc.) works
+  phcState.roleId       = phcState.roleId      || 'MOIC';
+  phcState.staffName    = phcState.staffName    || '';
+  phcState.staffMobile  = phcState.staffMobile  || '';
+  phcState.facilityCode = phcState.facilityCode || '';
+  phcState.facility     = phcState.facility     || {name:'',district:'',state:''};
+  phcState.startDate    = phcState.startDate    || null;
   phcState.setupDone    = true;
   phcState.roleDone     = true;
 
   // Load dept verifiers
-  try{ await loadDeptVerifiers(uphcState.facilityCode); }catch(e){}
+  try{ await loadDeptVerifiers(phcState.facilityCode); }catch(e){}
 
   // Restore saved progress
   try{
-    var pkey='chc_progress_v1_'+uphcState.facilityCode+'_'+uphcState.staffMobile;
+    var pkey='chc_progress_v1_'+phcState.facilityCode+'_'+phcState.staffMobile;
     var psaved=localStorage.getItem(pkey);
     if(psaved){
       var ps=JSON.parse(psaved);
-      if(ps.cards){uphcState.cards=ps.cards;phcState.cards=ps.cards;}
-      if(ps.streak){uphcState.streak=ps.streak;phcState.streak=ps.streak;}
+      if(ps.cards){phcState.cards=ps.cards;phcState.cards=ps.cards;}
+      if(ps.streak){phcState.streak=ps.streak;phcState.streak=ps.streak;}
     }
   }catch(e){}
 
   // Calculate current day from dept start date
   updateCurrentDay();
-  phcState.currentDay = uphcState.currentDay || 1;
-  phcState.startDate  = uphcState.startDate  || null;
+  phcState.currentDay = phcState.currentDay || 1;
+  phcState.startDate  = phcState.startDate  || null;
 
   showWelcomeScreen();
 }
@@ -4506,12 +4509,12 @@ async function startCHCApp(){
 
 function saveCHCProgress(){
   try{
-    var key='chc_progress_v1_'+uphcState.facilityCode+'_'+uphcState.staffMobile;
-    var data={cards:uphcState.cards||{},streak:uphcState.streak||0};
+    var key='chc_progress_v1_'+phcState.facilityCode+'_'+phcState.staffMobile;
+    var data={cards:phcState.cards||{},streak:phcState.streak||0};
     localStorage.setItem(key, JSON.stringify(data));
     // Also sync phcState
-    phcState.cards=uphcState.cards||{};
-    phcState.streak=uphcState.streak||0;
+    phcState.cards=phcState.cards||{};
+    phcState.streak=phcState.streak||0;
   }catch(e){}
 }
 
